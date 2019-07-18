@@ -1,21 +1,85 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
-<router-outlet></router-outlet>
+<div>
+  <h1>Select your pizza and toppings</h1>
+  <div>
+    <table class="pizza-app-order">
+      <tr>
+        <th rowspan="2">Toppings</th>
+        <th colspan="4">Pizza Size</th>
+      </tr>
+      <tr>
+        <th>Small ($5)</th>
+        <th>Medium ($7)</th>
+        <th>Large ($8)</th>
+        <th>Extra Large ($9)</th>
+      </tr>
+      <tr>
+        <td colspan="5">Veg Toppings</td>
+      </tr>
+      <tr *ngFor="let veg of vegToppings">
+        <td>{{veg.name}}</td>
+        <td class="center" (click)="veg.small = !veg.small;calculateTotal(veg,'small')">
+          <img src="../assets/images/checked.png" *ngIf="veg.small"/>
+        </td>
+        <td class="center" (click)="veg.medium = !veg.medium;calculateTotal(veg,'medium')">
+          <img src="../assets/images/checked.png" *ngIf="veg.medium"/>
+        </td>
+        <td class="center" (click)="veg.large = !veg.large;calculateTotal(veg,'large')">
+          <img src="../assets/images/checked.png" *ngIf="veg.large"/>
+        </td>
+        <td class="center" (click)="veg.extraLarge = !veg.extraLarge;calculateTotal(veg,'extraLarge')">
+          <img src="../assets/images/checked.png" *ngIf="veg.extraLarge"/>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">NonVeg Toppings</td>
+      </tr>
+      <tr *ngFor="let nonVeg of nonVegToppings">
+        <td>{{nonVeg.name}}</td>
+        <td class="center" (click)="nonVeg.small = !nonVeg.small;calculateTotal(nonVeg,'small')">
+          <img src="../assets/images/checked.png" *ngIf="nonVeg.small"/>
+        </td>
+        <td class="center" (click)="nonVeg.medium = !nonVeg.medium;calculateTotal(nonVeg,'medium')">
+          <img src="../assets/images/checked.png" *ngIf="nonVeg.medium"/>
+        </td>
+        <td class="center" (click)="nonVeg.large = !nonVeg.large;calculateTotal(nonVeg,'large')">
+          <img src="../assets/images/checked.png" *ngIf="nonVeg.large"/>
+        </td>
+        <td class="center" (click)="nonVeg.extraLarge = !nonVeg.extraLarge;calculateTotal(nonVeg,'extraLarge')">
+          <img src="../assets/images/checked.png" *ngIf="nonVeg.extraLarge"/>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">Total</td>
+      </tr>
+      <tr class="total-section">
+        <td>Offer</td>
+        <td></td>
+        <td>
+          <span *ngIf="promotions.medium.applied">Offer 1</span>
+        </td>
+        <td>
+          <span *ngIf="promotions.large.applied">Offer 3</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr class="total-section">
+        <td></td>
+        <td>{{total.small === 0 ? '' : total.small}}</td>
+        <td>
+          <span [ngClass]="{'strike-through': promotions.medium.applied === true}">
+            {{total.medium  === 0 ? '' : total.medium}}
+          </span><br/>
+          <span *ngIf="promotions.medium.applied">{{promotions.medium.total}}</span>
+        </td>
+        <td>
+          <span [ngClass]="{'strike-through': promotions.large.applied === true}">
+            {{total.large  === 0 ? '' : total.large}}
+          </span><br/>
+          <span *ngIf="promotions.large.applied">{{promotions.large.total}}</span>
+        </td>
+        <td>{{total.extraLarge  === 0 ? '' : total.extraLarge}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
